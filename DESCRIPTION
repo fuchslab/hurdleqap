@@ -1,0 +1,20 @@
+Package: hurdleqap
+Type: Package
+Title: Hurdleqap regression analysis for sparse network data
+Version: 0.1.0
+Author: Hannah Marchi
+Maintainer: Hannah Marchi <hannah.marchi@uni-bielefeld.de>
+Description: Regression analysis for sparse network data with dependency structure using a combination of the hurdle model and the quadratic assignment procedure (QAP)
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    ggplot2 (>= 3.3.4),
+    gridExtra (>= 2.3),
+    mgcv (>= 1.8-34),
+    sna (>= 2.6),
+    rlist(>= 0.4.6.1),
+    countreg(>= 0.2-1),
+    cowplot(>= 1.1.1),
+    statnet(>= 2019.6)
+RoxygenNote: 7.1.2
