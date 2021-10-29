@@ -1,7 +1,7 @@
 #' @export
-plotGamQap <- function(results, rug = FALSE, plotTitles = NULL, xLabels = NULL, display = "terms", legend = TRUE){
+plotGamQap <- function(hurdleqap, rug = FALSE, plotTitles = NULL, xLabels = NULL, display = "terms", legend = TRUE){
   # Non-parametric plot for distance
-  x <- results
+  x <- hurdleqap
 
   # plot functions for GAM models
   plotGam_Pois_response <- function(x){
@@ -189,19 +189,19 @@ plotGamQap <- function(results, rug = FALSE, plotTitles = NULL, xLabels = NULL, 
     return(g3)
   }
 
-  nCovs <- length(results$data_orig_Bin)-1
+  nCovs <- length(hurdleqap$data_orig_Bin)-1
   plots <- list()
 
   if(display == "terms"){
-    plots[[1]] <- plotGam_Bin_terms(results) +
+    plots[[1]] <- plotGam_Bin_terms(hurdleqap) +
       theme(axis.title.y = element_text(size = 17, angle = 90)) + labs(y = "s(distance)")
-    plots[[2]] <- plotGam_Pois_terms(results)
+    plots[[2]] <- plotGam_Pois_terms(hurdleqap)
   }
 
   if(display == "response"){
-    plots[[1]] <- plotGam_Bin_response(results) +
+    plots[[1]] <- plotGam_Bin_response(hurdleqap) +
       theme(axis.title.y = element_text(size = 17, angle = 90)) + labs(y = "predicted response")
-    plots[[2]] <- plotGam_Pois_response(results)
+    plots[[2]] <- plotGam_Pois_response(hurdleqap)
   }
 
   if(nCovs > 1){
@@ -309,13 +309,13 @@ plotGamQap <- function(results, rug = FALSE, plotTitles = NULL, xLabels = NULL, 
 #--------------------------------------------------
 #--------------------------------------------------
 #' @export
-plotGlmQap <- function(results, rug = FALSE, plotTitles = NULL, xLabels = NULL, ...){
+plotGlmQap <- function(hurdleqap, rug = FALSE, plotTitles = NULL, xLabels = NULL, ...){
 
-  nCovs <- length(results$data_orig_Bin)-1
+  nCovs <- length(hurdleqap$data_orig_Bin)-1
   plots <- list()
 
   # binomial
-  x_bin <- results
+  x_bin <- hurdleqap
   x_bin$data_orig <- x_bin$data_orig_Bin
   x_bin$pred_data <- x_bin$pred_data_Bin
   x_bin$plotData <- x_bin$plotDataBin
@@ -325,7 +325,7 @@ plotGlmQap <- function(results, rug = FALSE, plotTitles = NULL, xLabels = NULL, 
   x_bin$matrix_bin_coefficients <- x_bin$matrix_bin_coefficientsBin
 
   # possion
-  x_pois <- results
+  x_pois <- hurdleqap
   x_pois$data_orig <- x_pois$data_orig_Pois
   x_pois$pred_data <- x_pois$pred_data_Pois
   x_pois$plotData <- x_pois$plotDataPois
@@ -395,34 +395,33 @@ plotGlmQap <- function(results, rug = FALSE, plotTitles = NULL, xLabels = NULL, 
   do.call("grid.arrange", args = list(grobs = plots, ncol = length(plots)))
 }
 
-#' plotHurdleQAP
 #' @export
 #'
 #' @title plotHurdleQAP
 #' @description Plot function for object from class HurdleQap.
 #'
-#' @param results object of class HurdleQap
-#' @param method "parametric" if results of the parametric model should be plotted; "non-parametric" for the non-parametric model
-#' @param display only meaningful for method = "non-parametric". If display = "terms", y-axis of plot is on original (non-transformed) scale.
+#' @param hurdleqap object of class HurdleQap.
+#' @param method "parametric" if hurdleqap of the parametric model should be plotted; "nonparametric" for the non-parametric model.
+#' @param display only meaningful for method = "nonparametric". If display = "terms", y-axis of plot is on original (non-transformed) scale.
 #' If display = "response", y-axis is displayed on the predicted response scale.
 #' @param plotTitles list of characters which represent the single plot titles. Dimension should be equal to two times the number of covariates.
 #' @param xLabels list of characters which represent x-axis labels. Dimension should be equal to two times the number of covariates.
-#' @param legend
-#' @param rug
+#' @param legend if legend = TRUE, legend for non-parametric model is added
+#' @param rug if rug = TRUE, rugs are added on x-axis of the non-parametric part for x values
 #'
 #' @details See also function \link[hurdleqap]{hurdleQap}.
 #'
 #' @importFrom ggplot2 ggplot aes geom_line geom_density geom_vline geom_hline coord_cartesian theme_bw scale_x_continuous theme guides scale_linetype_manual
 #' scale_color_manual geom_ribbon geom_rug guide_axis element_text element_blank labs ggtitle annotate guide_legend unit margin
 #' @importFrom gridExtra grid.arrange arrangeGrob
-plotHurdleQap <- function(results, method = "parametric", rug = FALSE, plotTitles = NULL, xLabels = NULL, display = "terms", legend = TRUE){
-  if(method == "parametric"){
-    plotPar <- plotGlmQap(results = results, rug = rug,
+plotHurdleQap <- function(hurdleqap, method = c("parametric", "nonparametric"), rug = FALSE, plotTitles = NULL, xLabels = NULL, display = "terms", legend = TRUE){
+  if(method[1] == "parametric"){
+    plotPar <- plotGlmQap(hurdleqap = hurdleqap, rug = rug,
                           plotTitles = plotTitles, xLabels = xLabels)
     return(invisible(plotPar))
   }
-  if(method == "nonparametric"){
-    plotNonP <- plotGamQap(results = results, rug = rug,
+  if(method[1] == "nonparametric"){
+    plotNonP <- plotGamQap(hurdleqap = hurdleqap, rug = rug,
                            plotTitles = plotTitles,
                            xLabels = xLabels, display = display)
     return(invisible(plotNonP))

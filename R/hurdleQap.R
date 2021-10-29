@@ -4,20 +4,21 @@
 #' @description hurdleQap is a function for regression analysis for sparse network data with dependency structure
 #' using a combination of a hurdle model and the quadratic assignment procedure (QAP).
 #'
-#' @param y nxn adjacency matrix with count target variable
+#' @param y nxn adjacency matrix with count target variable.
 #' @param x list of nxn adjacency matrices: first matrix should be a distance matrix, following matrices are further covariates.
 #' @param removeControl logical value: is there data which should not be considered? Default value is FALSE.
-#' @param logicMatrix if removeControl = TRUE: logical nxn-matrix containing information about which data should not be considered: observation which should be removed are TRUE
-#' @param maxDist maximum distance (in unit of distance matrix x[[1]]); only distances smaller than maxDist are considered
-#' @param kbasis number of basis functions in bam (used only for first element of x (distance))
-#' @param reps number of permutations
+#' @param logicMatrix if removeControl = TRUE: logical nxn-matrix containing information about
+#' which data should not be considered: observation which should be removed are TRUE.
+#' @param maxDist maximum distance (in unit of distance matrix x[[1]]); only distances smaller than maxDist are considered.
+#' @param kbasis number of basis functions in bam (used only for first element of x (distance)).
+#' @param reps number of permutations.
 #' @return Object of class HurdleQap: list which contains among others:
 #' \itemize{
-#' \item modelGlmBin: model output of the zero part from the parametric model
-#' \item modelGlmPois: model output of the count part from the parametric model
-#' \item modelGamBin: model output of the zero part from the non-parametric model
-#' \item modelGamPois: model output of the count part from the non-parametric model
-#' \item qaplist: list element which contains permutations model coefficients and QAP-pvalues for each model
+#' \item modelGlmBin: model output of the zero part from the parametric model.
+#' \item modelGlmPois: model output of the count part from the parametric model.
+#' \item modelGamBin: model output of the zero part from the non-parametric model.
+#' \item modelGamPois: model output of the count part from the non-parametric model.
+#' \item qaplist: list element which contains permutations model coefficients and QAP-pvalues for each model.
 #' }
 #'
 #' @examples
@@ -44,19 +45,19 @@
 #' # QAP pvalues
 #' myQap$qaplist$zeroGlm$xbin_1[2:4]
 #'
-#' plotHurdleQap(results = myQap, method = "parametric", rug = FALSE, display = "terms",
+#' plotHurdleQap(hurdleqap = myQap, method = "parametric", rug = FALSE, display = "terms",
 #'               plotTitles = list("Binomial part\nDistance",
 #'                                 "Poissonian part\nDistance"),
 #'               xLabels = list(bquote(hat(beta)[binDist]),
 #'                              bquote(hat(beta)[poisDist])))
 #'
-#' plotHurdleQap(results = myQap, method = "nonparametric", rug = FALSE, display = "terms",
+#' plotHurdleQap(hurdleqap = myQap, method = "nonparametric", rug = FALSE, display = "terms",
 #'               plotTitles = list("Binomial part\nDistance",
 #'                                 "Poissonian part\nDistance"),
 #'               xLabels = list("Distance in m",
 #'                              "Distance in m"))
 #'
-#' plotHurdleQap(results = myQap, method = "nonparametric", rug = FALSE, display = "response",
+#' plotHurdleQap(hurdleqap = myQap, method = "nonparametric", rug = FALSE, display = "response",
 #'               plotTitles = list("Binomial part\nDistance",
 #'                                 "Poissonian part\nDistance"),
 #'               xLabels = list("Distance in m",
@@ -76,9 +77,9 @@
 #' myQap2$qaplist$zeroGlm$xbin_1[2:4]
 #' myQap2$qaplist$zeroGlm$xbin_2[2:4]
 #'
-#' plotHurdleQap(results = myQap2, method = "parametric", rug = FALSE, display = "terms")
+#' plotHurdleQap(hurdleqap = myQap2, method = "parametric", rug = FALSE, display = "terms")
 #'
-#' plotHurdleQap(results = myQap2, method = "nonparametric", rug = TRUE, display = "terms",
+#' plotHurdleQap(hurdleqap = myQap2, method = "nonparametric", rug = TRUE, display = "terms",
 #'               plotTitles = list("Binomial part\nx1",
 #'                                 "Poissonian part\nx1",
 #'                                 "Binomial part\nx2",

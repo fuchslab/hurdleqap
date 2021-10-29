@@ -5,8 +5,8 @@
 \title{plotHurdleQAP}
 \usage{
 plotHurdleQap(
-  results,
-  method = "parametric",
+  hurdleqap,
+  method = c("parametric", "nonparametric"),
   rug = FALSE,
   plotTitles = NULL,
   xLabels = NULL,
@@ -15,24 +15,24 @@ plotHurdleQap(
 )
 }
 \arguments{
-\item{results}{object of class HurdleQap}
+\item{hurdleqap}{object of class HurdleQap.}
 
-\item{method}{"parametric" if results of the parametric model should be plotted; "non-parametric" for the non-parametric model}
+\item{method}{"parametric" if hurdleqap of the parametric model should be plotted; "nonparametric" for the non-parametric model.}
 
-\item{rug}{}
+\item{rug}{if rug = TRUE, rugs are added on x-axis of the non-parametric part for x values}
 
 \item{plotTitles}{list of characters which represent the single plot titles. Dimension should be equal to two times the number of covariates.}
 
 \item{xLabels}{list of characters which represent x-axis labels. Dimension should be equal to two times the number of covariates.}
 
-\item{display}{only meaningful for method = "non-parametric". If display = "terms", y-axis of plot is on original (non-transformed) scale.
+\item{display}{only meaningful for method = "nonparametric". If display = "terms", y-axis of plot is on original (non-transformed) scale.
 If display = "response", y-axis is displayed on the predicted response scale.}
+
+\item{legend}{if legend = TRUE, legend for non-parametric model is added}
 }
 \description{
 Plot function for object from class HurdleQap.
 }
 \details{
-plotHurdleQAP
-
 See also function \link[hurdleqap]{hurdleQap}.
 }
